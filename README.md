@@ -113,47 +113,28 @@ Open this URL in your browser to experience the app!
 
 ## ☁️ Production Deployment (Vercel)
 
-The application is structured as a monorepo and is ready to be deployed to Vercel as two separate projects.
+The application is deployed on Vercel utilizing Vercel Postgres for the database.
 
-### Step 1: Database Setup
-1. Create a MySQL database using a managed provider like [PlanetScale](https://planetscale.com/), [Aiven](https://aiven.io/), or [Supabase](https://supabase.com/) (using their Postgres/MySQL compatible endpoints).
-2. Obtain your raw connection string (e.g., `mysql://user:pass@host/db`).
+### Live Links:
+- **Frontend App**: [https://frontend-two-rho-28.vercel.app](https://frontend-two-rho-28.vercel.app)
+- **Backend API**: [https://backend-inky-delta-90.vercel.app](https://backend-inky-delta-90.vercel.app)
 
-### Step 2: Deploy the Backend (API)
-1. In your Vercel Dashboard, click **Add New... > Project**.
-2. Import your GitHub repository.
-3. In the "Configure Project" screen:
-   - **Project Name:** `earnest-backend`
-   - **Framework Preset:** `Other`
-   - **Root Directory:** `backend`
-4. **Environment Variables:** Add all variables from your `backend/.env.example`.
-   - `DATABASE_URL` = Your MySQL connection string
-   - `CORS_ORIGIN` = The future URL of your Vercel frontend (e.g., `https://earnest-frontend.vercel.app`)
-   - `JWT_ACCESS_SECRET` = A strong random string
-   - `JWT_REFRESH_SECRET` = A strong random string
-5. Click **Deploy**. Vercel will automatically use `backend/api/index.ts` and `backend/vercel.json` to deploy the Express app as a serverless function.
+### Deployment Steps Used:
 
-### Step 3: Run Database Migrations in Production
-*Note: Vercel does not automatically run DB migrations on deploy by default.*
-From your local machine, run:
-```bash
-cd backend
-npx prisma db push --schema=prisma/schema.prisma --accept-data-loss
-```
-Make sure your local `.env` currently points to the production DB, or append the URL manually.
+**1. Database Configuration (Vercel Postgres)**
+- Created a Vercel Postgres database via the Vercel Storage Dashboard.
+- Configured the Prisma schema in `backend/prisma/schema.prisma` to use the `postgresql` provider.
+- Added the generated `DATABASE_URL` to the backend environment variables.
 
-### Step 4: Deploy the Frontend
-1. Back in your Vercel Dashboard, click **Add New... > Project**.
-2. Import the *same* GitHub repository.
-3. In the "Configure Project" screen:
-   - **Project Name:** `earnest-frontend`
-   - **Framework Preset:** `Next.js`
-   - **Root Directory:** `frontend`
-4. **Environment Variables:**
-   - `NEXT_PUBLIC_API_URL` = The deployment URL of your newly created backend (e.g., `https://earnest-backend.vercel.app`)
-5. Click **Deploy**.
+**2. Backend API Deployment**
+- Deployed the `backend` directory using the Vercel CLI (`vercel --prod`).
+- Configured secure environment variables (`JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `DATABASE_URL`, `CORS_ORIGIN`).
+- Migrated the database schema by running `npx prisma db push`.
+- Set the `CORS_ORIGIN` wildcard to allow secure requests from the Vercel frontend.
 
-**Important:** Once the frontend is deployed, ensure that the `CORS_ORIGIN` environment variable in your *Backend* Vercel project exactly matches the frontend's deployment URL. Redeploy the backend if necessary so the environment variables take effect.
+**3. Frontend App Deployment**
+- Deployed the `frontend` directory using the Vercel CLI (`vercel --prod`).
+- Configured the `NEXT_PUBLIC_API_URL` environment variable to point to the live backend API URL.
 
 ---
 
