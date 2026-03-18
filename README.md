@@ -2,6 +2,10 @@
 
 A premium, production-ready Task Management System built with a modern full-stack architecture and a stunning "Antigravity UI" theme.
 
+### 🚀 Live Links
+- **Frontend App**: [https://frontend-two-rho-28.vercel.app](https://frontend-two-rho-28.vercel.app)
+- **Backend API**: [https://backend-inky-delta-90.vercel.app](https://backend-inky-delta-90.vercel.app)
+
 ## 🚀 Tech Stack
 
 ### Backend
@@ -114,10 +118,6 @@ Open this URL in your browser to experience the app!
 ## ☁️ Production Deployment (Vercel)
 
 The application is deployed on Vercel utilizing Vercel Postgres for the database.
-
-### Live Links:
-- **Frontend App**: [https://frontend-two-rho-28.vercel.app](https://frontend-two-rho-28.vercel.app)
-- **Backend API**: [https://backend-inky-delta-90.vercel.app](https://backend-inky-delta-90.vercel.app)
 
 ### Deployment Steps Used:
 
